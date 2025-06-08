@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Servicio de Moto Taxi</title>
+
+  <!-- Fuente Poppins -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet" />
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <!-- Animate.css -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+
+  <style>
+    :root {
+      --color-primario: #2196f3;
+      --color-fondo: #fff url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1350&q=80') no-repeat center center fixed;
+      --color-texto: #000;
+      --color-oscuro: #121212;
+      --color-blanco: #fff;
+      --fuente: 'Poppins', sans-serif;
+    }
+
+    body {
+      font-family: var(--fuente);
+      margin: 0;
+      background-color: var(--color-fondo);
+      background-size: cover;
+      color: var(--color-texto);
+      transition: background-color 0.3s, color 0.3s;
+    }
+
+    header {
+      background-color: var(--color-primario);
+      color: var(--color-blanco);
+      padding: 10px 20px;
+    }
+
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    nav h1 {
+      font-size: 1.5rem;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 15px;
+      padding: 0;
+      margin: 0;
+    }
+
+    nav ul li {
+      display: inline;
+    }
+
+    nav ul li a {
+      color: var(--color-blanco);
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .dark-mode-toggle {
+      background: none;
+      border: none;
+      color: var(--color-blanco);
+      font-size: 1.2rem;
+      cursor: pointer;
+    }
+
+    main {
+      padding: 20px;
+      max-width: 800px;
+      margin: auto;
+      background-color: rgba(255,255,255,0.85);
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.2);
+    }
+
+    h2, h3 {
+      color: var(--color-primario);
+    }
+
+    section {
+      margin-bottom: 40px;
+    }
+
+    #fecha-hora {
+      text-align: right;
+      font-size: 0.9rem;
+      margin-bottom: 10px;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+    }
+
+    label {
+      margin-top: 10px;
+      font-weight: bold;
+    }
+
+    input, textarea {
+      padding: 8px;
+      margin-top: 5px;
+      border-radius: 4px;
+      border: 1px solid #ccc;
+      font-family: var(--fuente);
+      font-size: 1rem;
+      resize: vertical;
+    }
+
+    .submit-btn {
+      background-color: var(--color-primario);
+      color: white;
+      padding: 10px;
+      margin-top: 15px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .submit-btn:hover {
+      background-color: #1976d2;
+    }
+
+    .confirmation-message {
+      margin-top: 15px;
+      color: green;
+      font-weight: bold;
+      display: none;
+    }
+
+    .whatsapp-btn {
+      display: inline-block;
+      background-color: #25d366;
+      color: white;
+      padding: 10px 20px;
+      text-decoration: none;
+      border-radius: 5px;
+      font-weight: bold;
+      transition: background-color 0.3s;
+    }
+
+    .whatsapp-btn:hover {
+      background-color: #1ebe5b;
+    }
+
+    footer {
+      background-color: var(--color-primario);
+      color: white;
+      text-align: center;
+      padding: 15px 10px;
+      margin-top: 40px;
+    }
+
+    /* Modo oscuro */
+    .dark-mode {
+      background-color: var(--color-oscuro);
+      color: var(--color-blanco);
+    }
+
+    .dark-mode nav,
+    .dark-mode footer {
+      background-color: #1e1e1e;
+    }
+
+    .dark-mode main {
+      background-color: rgba(30,30,30,0.85);
+    }
+
+    .dark-mode .submit-btn {
+      background-color: #3f51b5;
+    }
+
+    .dark-mode .whatsapp-btn {
+      background-color: #128c7e;
+    }
+
+    /* Estrellas rating */
+    .stars {
+      display: flex;
+      flex-direction: row;
+      font-size: 2rem;
+      gap: 5px;
+      cursor: pointer;
+      color: #ccc;
+      user-select: none;
+    }
+
+    .stars .star.selected,
+    .stars .star:hover,
+    .stars .star:hover ~ .star {
+      color: #ffca08;
+    }
+
+    .stars .star.selected {
+      color: #ffc107;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <nav>
+      <h1>Servicio Moto Taxi</h1>
+      <ul>
+        <li><a href="#tarifas">Tarifas</a></li>
+        <li><a href="#formulario">Contacto</a></li>
+        <li><a href="#calificacion">Califica</a></li>
+      </ul>
+      <button class="dark-mode-toggle" aria-label="Toggle dark mode" title="Modo oscuro">
+        <i class="fas fa-moon"></i>
+      </button>
+    </nav>
+  </header>
+
+  <main>
+    <div id="fecha-hora"></div>
+
+    <section id="bienvenida" class="animate__animated">
+      <h2>Bienvenido</h2>
+      <p>Ofrecemos transporte en moto taxi para que llegues rápido y sin complicaciones.</p>
+    </section>
+
+    <section id="tarifas" class="animate__animated">
+      <h3><i class="fas fa-money-bill-wave"></i> Tarifas y Zonas</h3>
+      <ul>
+        <li><i class="fas fa-map-marker-alt"></i> Zona 1 - Centro: $5.00</li>
+        <li><i class="fas fa-map-marker-alt"></i> Zona 2 - Norte: $6.50</li>
+        <li><i class="fas fa-map-marker-alt"></i> Zona 3 - Sur: $7.00</li>
+        <li><i class="fas fa-map-marker-alt"></i> Zona 4 - Fuera de la ciudad: Consultar</li>
+      </ul>
+    </section>
+
+    <section id="formulario" class="animate__animated">
+      <h3><i class="fas fa-motorcycle"></i> Solicita tu viaje</h3>
+      <form id="solicitud-form">
+        <label for="nombre">Nombre completo:</label>
+        <input type="text" id="nombre" name="nombre" placeholder="Tu nombre" required />
+
+        <label for="telefono">Teléfono:</label>
+        <input type="tel" id="telefono" name="telefono" placeholder="Ej. 0991234567" required />
+
+        <label for="direccion">Dirección de recogida:</label>
+        <input type="text" id="direccion" name="direccion" placeholder="Tu dirección de recogida" required />
+
+        <button type="submit" class="submit-btn">Enviar solicitud</button>
+        <div class="confirmation-message" id="mensaje-confirmacion">
+          ¡Solicitud enviada con éxito! Nos pondremos en contacto contigo pronto.
+        </div>
+      </form>
+    </section>
+
+    <div style="text-align:center; margin-top: 40px;" class="animate__animated">
+      <a class="whatsapp-btn" href="https://wa.me/573133375046" target="_blank" rel="noopener noreferrer">
+        <i class="fab fa-whatsapp"></i> Solicita tu viaje
+      </a>
+    </div>
+
+    <section id="calificacion" class="animate__animated">
+      <h3><i class="fas fa-star"></i> Califica nuestro servicio</h3>
+      <div class="stars" id="stars">
+        <i class="fas fa-star star" data-value="1"></i>
+        <i class="fas fa-star star" data-value="2"></i>
+        <i class="fas fa-star star" data-value="3"></i>
+        <i class="fas fa-star star" data-value="4"></i>
+        <i class="fas fa-star star" data-value="5"></i>
+      </div>
+      <textarea id="comentario" rows="3" placeholder="Deja un comentario (opcional)"></textarea>
+      <button id="enviar-calificacion" class="submit-btn">Enviar calificación por WhatsApp</button>
+      <div class="confirmation-message" id="mensaje-calificacion" style="color: #007700; margin-top: 10px; display:none;">
+        ¡Gracias por tu calificación!
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    &copy; 2025 Servicio de Moto Taxi. Todos los derechos reservados.
+  </footer>
+
+  <script>
+    // Modo oscuro
+    const toggleBtn = document.querySelector('.dark-mode-toggle');
+    const icon = toggleBtn.querySelector('i');
+    toggleBtn.addEventListener('click', () => {
+      document.body.classList.toggle('dark-mode');
+      icon.classList.toggle('fa-moon');
+      icon.classList.toggle('fa-sun');
+    });
+
+    // Fecha y hora
+    function actualizarFechaHora() {
+      const fechaHoraElem = document.getElementById('fecha-hora');
+      const ahora = new Date();
+      const opcionesFecha = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+      const opcionesHora = { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false };
+      const fecha = ahora.toLocaleDateString('es-ES', opcionesFecha);
+      const hora = ahora.toLocaleTimeString('es-ES', opcionesHora);
+      fechaHoraElem.textContent = `${fecha.charAt(0).toUpperCase() + fecha.slice(1)} - ${hora}`;
+    }
+    actualizarFechaHora();
+    setInterval(actualizarFechaHora, 1000);
+
+    // Animaciones al hacer scroll
+    function activarAnimacionScroll() {
+      const elementos = document.querySelectorAll('.animate__animated');
+      const trigger = window.innerHeight * 0.85;
+      elementos.forEach(el => {
+        const top = el.getBoundingClientRect().top;
+        if (top < trigger && !el.classList.contains('animate__fadeInUp')) {
+          el.classList.add('animate__fadeInUp');
+        }
+      });
+    }
+    window.addEventListener('scroll', activarAnimacionScroll);
+    window.addEventListener('load', activarAnimacionScroll);
+
+    // Formulario solicitud: enviar datos a WhatsApp
+    document.getElementById('solicitud-form').addEventListener('submit', (e) => {
+      e.preventDefault();
+
+      const nombre = document.getElementById('nombre').value.trim();
+      const telefono = document.getElementById('telefono').value.trim();
+      const direccion = document.getElementById('direccion').value.trim();
+
+      if (!nombre || !telefono || !direccion) {
+        alert('Por favor completa todos los campos.');
+        return;
+      }
+
+      const telefonoMotoTaxi = '573133375046'; // Número de destino WhatsApp
+      const mensaje = 
+        `Nueva solicitud de viaje:\n` +
+        `Nombre: ${nombre}\n` +
+        `Teléfono: ${telefono}\n` +
+        `Dirección de recogida: ${direccion}`;
+
+      const urlWhatsApp = `https://wa.me/${telefonoMotoTaxi}?text=${encodeURIComponent(mensaje)}`;
+      window.open(urlWhatsApp, '_blank');
+
+      // Opcional: limpiar formulario y mostrar mensaje
+      e.target.reset();
+      const mensajeConfirmacion = document.getElementById('mensaje-confirmacion');
+      mensajeConfirmacion.style.display = 'block';
+      setTimeout(() => {
+        mensajeConfirmacion.style.display = 'none';
+      }, 5000);
+    });
+
+    // Calificación estrellas
+    const stars = document.querySelectorAll('.stars .star');
+    let calificacionSeleccionada = 0;
+
+    function actualizarEstrellas(valor) {
+      stars.forEach(star => {
+        star.classList.toggle('selected', parseInt(star.getAttribute('data-value')) <= valor);
+      });
+    }
+
+    stars.forEach(star => {
+      star.addEventListener('click', () => {
+        calificacionSeleccionada = parseInt(star.getAttribute('data-value'));
+        actualizarEstrellas(calificacionSeleccionada);
+      });
+    });
+
+    // Enviar calificación por WhatsApp
+    document.getElementById('enviar-calificacion').addEventListener('click', () => {
+      if (calificacionSeleccionada === 0) {
+        alert('Por favor selecciona una calificación antes de enviar.');
+        return;
+      }
+      const comentario = document.getElementById('comentario').value.trim();
+      const texto = `Calificación: ${calificacionSeleccionada} estrellas\nComentario: ${comentario || 'Sin comentario'}`;
+      const telefonoMotoTaxi = '573133375046'; // Número de destino
+      const url = `https://wa.me/${telefonoMotoTaxi}?text=${encodeURIComponent(texto)}`;
+
+      window.open(url, '_blank');
+
+      const mensajeCalificacion = document.getElementById('mensaje-calificacion');
+      mensajeCalificacion.style.display = 'block';
+
+      setTimeout(() => {
+        mensajeCalificacion.style.display = 'none';
+      }, 5000);
+
+      // Limpiar selección y comentario
+      calificacionSeleccionada = 0;
+      actualizarEstrellas(0);
+      document.getElementById('comentario').value = '';
+    });
+  </script>
+
+</body>
+</html>
